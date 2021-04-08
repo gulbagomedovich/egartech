@@ -90,9 +90,29 @@
     let securities = [[${securities}]];
 
     securities.forEach((element) => {
-        dates.push(element.date.substring(0, 10));
-        amounts.push(element.amount);
+        if (dates.includes(element.date.substring(0, 10))) {
+            let index = dates.indexOf(element.date.substring(0, 10));
+            amounts[index] += element.amount;
+        } else {
+            dates.push(element.date.substring(0, 10));
+            amounts.push(element.amount);
+        }
     });
+
+    let map = new Map();
+
+    for (let i = 0; i < dates.length; i++) {
+        map.set(dates[i], amounts[i]);
+    }
+
+    let mapSorted = new Map([...map.entries()].sort());
+    dates.sort()
+
+    let amountsSortedByDates = [];
+
+    for (let i = 0; i < mapSorted.size; i++) {
+        amountsSortedByDates[i] = mapSorted.get(dates[i]);
+    }
 
     let ctx = document.getElementById('myChart').getContext('2d');
     let myChart = new Chart(ctx, {
@@ -101,7 +121,7 @@
             labels: dates,
             datasets: [{
                 label: 'Стоимость (в рублях)',
-                data: amounts,
+                data: amountsSortedByDates,
                 backgroundColor: [
                     'rgb(255, 99, 132)'
                 ],
