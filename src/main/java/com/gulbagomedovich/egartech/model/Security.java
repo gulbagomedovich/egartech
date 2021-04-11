@@ -3,6 +3,10 @@ package com.gulbagomedovich.egartech.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -14,12 +18,21 @@ public class Security {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Название не может быть пустым")
     private String name;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Дата не может быть пустой")
+    @PastOrPresent(message = "Укажите правильную дату")
     private Date date;
 
-    private int amount;
+    @NotNull(message = "Цена не может быть пустой")
+    @DecimalMin(value = "0.01", message = "Укажите правильную цену")
+    private BigDecimal amount;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Security() {
     }
@@ -48,12 +61,20 @@ public class Security {
         this.date = date;
     }
 
-    public int getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

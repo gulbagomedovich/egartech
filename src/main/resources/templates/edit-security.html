@@ -37,22 +37,27 @@
 <main class="py-3">
     <div class="container">
         <form action="/securities" method="post" th:object="${security}">
+            <input type="hidden" name="_method" value="put">
+            <input th:field="*{id}" type="hidden">
             <div class="mb-3">
                 <label for="exampleInputName" class="form-label">Название</label>
-                <input th:field="*{name}" type="text" class="form-control" id="exampleInputName" required>
+                <input th:field="*{name}" type="text" class="form-control" id="exampleInputName" aria-describedby="nameHelp" autofocus>
+                <div id="nameHelp" class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
             </div>
             <div class="mb-3">
                 <label for="exampleInputDate" class="form-label">Дата покупки</label>
-                <input th:field="*{{date}}" type="date" class="form-control" id="exampleInputDate" required>
+                <input th:field="*{date}" type="date" class="form-control" id="exampleInputDate" aria-describedby="dateHelp">
+                <div id="dateHelp" class="form-text text-danger" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
             </div>
             <div class="mb-3">
                 <label for="exampleInputAmount" class="form-label">Цена (в рублях)</label>
-                <input th:field="*{amount}" type="number" class="form-control" id="exampleInputAmount" required>
+                <input th:field="*{amount}" type="number" step="0.01" class="form-control" id="exampleInputAmount" aria-describedby="amountHelp">
+                <div id="amountHelp" class="form-text text-danger" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></div>
             </div>
-            <input th:field="*{id}" type="hidden">
             <button type="submit" class="btn btn-warning mb-3">Редактировать</button>
         </form>
         <form th:action="@{'/securities/' + ${security.id}}" method="post">
+            <input type="hidden" name="_method" value="delete">
             <button type="submit" class="btn btn-danger">Удалить</button>
         </form>
     </div>

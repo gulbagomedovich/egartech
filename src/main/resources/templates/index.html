@@ -28,7 +28,11 @@
                     <li><a class="dropdown-item" href="/securities/new">Новая ценная бумага</a></li>
                     <li><a class="dropdown-item" href="">Профиль</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="">Выйти</a></li>
+                    <li>
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="dropdown-item">Выйти</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -120,7 +124,7 @@
         data: {
             labels: dates,
             datasets: [{
-                label: 'Стоимость (в рублях)',
+                label: 'Общая стоимость (в рублях)',
                 data: amountsSortedByDates,
                 backgroundColor: [
                     'rgb(255, 99, 132)'
