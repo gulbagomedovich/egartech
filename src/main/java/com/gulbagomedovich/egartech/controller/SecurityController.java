@@ -4,7 +4,6 @@ import com.gulbagomedovich.egartech.model.Security;
 import com.gulbagomedovich.egartech.model.User;
 import com.gulbagomedovich.egartech.repository.SecurityRepository;
 import com.gulbagomedovich.egartech.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
